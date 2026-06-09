@@ -7,12 +7,14 @@ function Layout({ children }) {
 
       <Sidebar />
 
-      <div className="ml-72">
+      <div className="ml-72 flex flex-col min-h-screen">
 
         <Navbar />
 
-        <main className="p-8">
-          {children}
+        <main className="flex-1 p-8 overflow-auto">
+          <div className="max-w-[1800px] mx-auto">
+            {children}
+          </div>
         </main>
 
       </div>

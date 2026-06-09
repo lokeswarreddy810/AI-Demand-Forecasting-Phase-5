@@ -23,13 +23,30 @@ from app.models.forecast_confidence import ForecastConfidence
 from app.models.admin_audit_log import AdminAuditLog
 from app.models.forecast_history import ForecastHistory
 
+# Phase 5 models
+from app.models.forecast_project import ForecastProject
+from app.models.project_activity import ProjectActivity
+from app.models.project_permission import ProjectPermission
+from app.models.forecast_scenario import ForecastScenario
+from app.models.forecast_comment import ForecastComment
+from app.models.shared_report import SharedReport
+from app.models.forecast_revision import ForecastRevision
+from app.models.dataset_version import DatasetVersion
+from app.models.dataset_archive import DatasetArchive
+from app.models.model_performance import ModelPerformance
+from app.models.executive_report import ExecutiveReport
+from app.models.report_schedule import ReportSchedule
+from app.models.dashboard_layout import DashboardLayout
+from app.models.dashboard_filter import DashboardFilter
+
 app = FastAPI(
     title="Advanced AI Demand Forecasting API",
-    version="4.0.0",
+    version="5.0.0",
     description=(
         "Advanced AI Demand Forecasting backend with authentication, "
         "forecasting, analytics, automation, alerts, reports, integrations, "
-        "and dashboard modules."
+        "dashboard modules, collaboration, scenario analysis, executive "
+        "reporting and business intelligence."
     ),
 )
 
@@ -86,7 +103,7 @@ def root():
                 border-radius: 24px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
                 border: 1px solid #b7ff39;
-                max-width: 800px;
+                max-width: 950px;
                 width: 90%;
             }
 
@@ -100,6 +117,7 @@ def root():
                 font-size: 18px;
                 color: #444;
                 margin-bottom: 30px;
+                line-height: 1.6;
             }
 
             .badge {
@@ -150,7 +168,7 @@ def root():
             .modules {
                 margin-top: 30px;
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 12px;
                 text-align: left;
             }
@@ -173,9 +191,11 @@ def root():
             <h1>🚀 Advanced AI Demand Forecasting API</h1>
 
             <p>
-                Version 4.0.0 backend is active with authentication,
-                forecasting, analytics, reports, automation, alerts,
-                integrations, and AI recommendation modules.
+                Version 5.0.0 backend is active with authentication,
+                forecasting, analytics, executive dashboards,
+                scenario analysis, collaboration, business intelligence,
+                executive reporting, automation, integrations,
+                AI recommendations, and advanced forecasting modules.
             </p>
 
             <div class="buttons">
@@ -201,6 +221,17 @@ def root():
                 <div class="module">Dashboard Settings</div>
                 <div class="module">User Management</div>
                 <div class="module">Monitoring</div>
+
+                <div class="module">Forecast Projects</div>
+                <div class="module">Scenario Analysis</div>
+                <div class="module">Executive Dashboard</div>
+                <div class="module">AI Insights</div>
+                <div class="module">Collaboration</div>
+                <div class="module">Dataset Management</div>
+                <div class="module">Forecast Accuracy</div>
+                <div class="module">Executive Reports</div>
+                <div class="module">Dashboard Enhancements</div>
+
                 <div class="module">Security</div>
             </div>
         </div>
