@@ -5,3 +5,4 @@ from app.models.report import Report
 from app.models.forecast_history import ForecastHistory
 from app.models.notification import Notification
 from app.models.activity_log import ActivityLog
+from app.models.admin_audit_log import AdminAuditLog

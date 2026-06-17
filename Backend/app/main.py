@@ -23,7 +23,6 @@ from app.models.forecast_confidence import ForecastConfidence
 from app.models.admin_audit_log import AdminAuditLog
 from app.models.forecast_history import ForecastHistory
 
-# Phase 5 models
 from app.models.forecast_project import ForecastProject
 from app.models.project_activity import ProjectActivity
 from app.models.project_permission import ProjectPermission
@@ -38,6 +37,13 @@ from app.models.executive_report import ExecutiveReport
 from app.models.report_schedule import ReportSchedule
 from app.models.dashboard_layout import DashboardLayout
 from app.models.dashboard_filter import DashboardFilter
+from app.api.v1.endpoints import forecast_approvals
+from app.api.v1.endpoints import organizations
+from app.models.admin_audit_log import AdminAuditLog
+from app.models.notification_history import NotificationHistory
+from app.models.organization_announcement import OrganizationAnnouncement
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Advanced AI Demand Forecasting API",
@@ -75,7 +81,6 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 
 app.include_router(api_router)
-
 
 @app.get("/", response_class=HTMLResponse)
 def root():

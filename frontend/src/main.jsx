@@ -6,12 +6,17 @@ import App from "./App";
 import "./index.css";
 
 import { ThemeProvider } from "./context/ThemeContext";
+import { OrganizationProvider } from "./context/OrganizationContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(
+  document.getElementById("root")
+).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <App />
+        <OrganizationProvider>
+          <App />
+        </OrganizationProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>

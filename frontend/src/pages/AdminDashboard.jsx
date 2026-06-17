@@ -7,6 +7,8 @@ function AdminDashboard() {
   const [reports, setReports] = useState([]);
   const [activities, setActivities] = useState([]);
   const [stats, setStats] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const getArray = (res, key) => {
     if (Array.isArray(res.data)) return res.data;
@@ -18,21 +20,36 @@ function AdminDashboard() {
 
   const loadAdminData = async () => {
     try {
+      setLoading(true);
       const usersRes = await API.get("/admin/users");
       const datasetsRes = await API.get("/datasets/");
-      const reportsRes = await API.post(
-        "/forecast/generate?days=7&model=linear_regression"
-      );
       const activitiesRes = await API.get("/monitoring/logs");
       const statsRes = await API.get("/analytics/summary");
 
       setUsers(getArray(usersRes, "users"));
       setDatasets(getArray(datasetsRes, "datasets"));
-      setReports(getArray(reportsRes, "forecast"));
       setActivities(getArray(activitiesRes, "logs"));
       setStats(statsRes.data || {});
+
+      try {
+        const reportsRes = await API.post(
+          "/forecast/generate?days=7&model=linear_regression"
+        );
+
+        setReports(getArray(reportsRes, "forecast"));
+      } catch (reportError) {
+        console.log(
+          "Report Load Error:",
+          reportError.response?.data || reportError.message
+        );
+        setReports([]);
+      }
+
     } catch (error) {
       console.log("Admin Error:", error.response?.data || error.message);
+      setMessage("Failed to refresh admin dashboard");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,17 +58,28 @@ function AdminDashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="text-gray-800 dark:text-gray-200">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-bold text-[#123f1f] dark:text-white">
-          Admin Dashboard
-        </h1>
+        <div>
+          <h1 className="text-4xl font-bold text-[#123f1f] dark:text-white">
+            Admin Dashboard
+          </h1>
+
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
+            Manage users, datasets, reports and forecasting activities.
+          </p>
+        </div>
 
         <button
           onClick={loadAdminData}
-          className="bg-[#9dff00] text-[#032b11] font-bold px-6 py-3 rounded-xl"
+          disabled={loading}
+          className={`text-[#032b11] font-bold px-6 py-3 rounded-xl transition ${
+            loading
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-[#9dff00] hover:bg-[#8ee600]"
+          }`}
         >
-          Refresh
+          {loading ? "Refreshing..." : "Refresh"}
         </button>
       </div>
 
@@ -89,7 +117,13 @@ function AdminDashboard() {
 
       <Section title="Uploaded Reports">
         <Table
-          headers={["Product", "Forecast Date", "Predicted Qty", "Revenue", "Model"]}
+          headers={[
+            "Product",
+            "Forecast Date",
+            "Predicted Qty",
+            "Revenue",
+            "Model",
+          ]}
           rows={reports.map((r) => [
             r.product_name || "N/A",
             r.forecast_date || "N/A",
@@ -106,7 +140,11 @@ function AdminDashboard() {
           rows={activities.map((a) => [
             a.username || "Unknown",
             a.activity || "Activity",
-            a.timestamp ? new Date(a.timestamp).toLocaleString() : "N/A",
+            a.timestamp
+              ? new Date(a.timestamp).toLocaleString()
+              : a.created_at
+              ? new Date(a.created_at).toLocaleString()
+              : "N/A",
           ])}
         />
       </Section>
@@ -117,11 +155,9 @@ function AdminDashboard() {
 function Card({ title, value }) {
   return (
     <div className="bg-white dark:bg-[#1e1e1e] p-6 rounded-2xl shadow-md border border-green-200 dark:border-gray-700">
-      <p className="text-gray-500 dark:text-gray-300">
-        {title}
-      </p>
+      <p className="text-gray-500 dark:text-gray-300">{title}</p>
 
-      <h2 className="text-3xl font-bold text-[#123f1f] dark:text-white mt-3">
+      <h2 className="text-3xl font-bold text-[#123f1f] dark:text-[#9dff00] mt-3">
         {value}
       </h2>
     </div>
@@ -143,7 +179,7 @@ function Section({ title, children }) {
 function Table({ headers, rows }) {
   return (
     <div className="overflow-x-auto max-h-[350px] overflow-y-auto rounded-xl border border-green-200 dark:border-gray-700">
-      <table className="w-full min-w-[900px]">
+      <table className="w-full min-w-[900px] bg-white dark:bg-[#1e1e1e]">
         <thead className="sticky top-0 bg-white dark:bg-[#1e1e1e] z-10">
           <tr className="border-b border-green-200 dark:border-gray-700 text-left">
             {headers.map((h) => (
@@ -171,7 +207,7 @@ function Table({ headers, rows }) {
             rows.map((row, index) => (
               <tr
                 key={index}
-                className="border-b border-gray-100 dark:border-gray-700"
+                className="border-b border-gray-100 dark:border-gray-700 hover:bg-[#f5fff0] dark:hover:bg-[#2a2a2a]"
               >
                 {row.map((cell, i) => (
                   <td

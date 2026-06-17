@@ -37,6 +37,18 @@ import ForecastAccuracy from "./pages/ForecastAccuracy";
 import ExecutiveReports from "./pages/ExecutiveReports";
 import ReportScheduler from "./pages/ReportScheduler";
 import DashboardLayouts from "./pages/DashboardLayouts";
+
+import OrganizationManagement from "./pages/OrganizationManagement";
+import ForecastApprovals from "./pages/ForecastApprovals";
+import WorkflowAutomation from "./pages/WorkflowAutomation";
+import StrategicPlanning from "./pages/StrategicPlanning";
+import ForecastGovernance from "./pages/ForecastGovernance";
+import KPIManagement from "./pages/KPIManagement";
+import DataQualityCenter from "./pages/DataQualityCenter";
+import ExecutiveCommandCenter from "./pages/ExecutiveCommandCenter";
+import NotificationCenter from "./pages/NotificationCenter";
+import AuditLogs from "./pages/AuditLogs";
+
 import Layout from "./layouts/Layout";
 
 function ProtectedRoute({ children }) {
@@ -57,6 +69,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
       <Route path="/dashboard" element={<ProtectedPage><Dashboard /></ProtectedPage>} />
       <Route path="/datasets" element={<ProtectedPage><Datasets /></ProtectedPage>} />
       <Route path="/upload" element={<ProtectedPage><Upload /></ProtectedPage>} />
@@ -92,6 +105,18 @@ function App() {
       <Route path="/executive-reports" element={<ProtectedPage><ExecutiveReports /></ProtectedPage>} />
       <Route path="/report-scheduler" element={<ProtectedPage><ReportScheduler /></ProtectedPage>} />
       <Route path="/dashboard-layouts" element={<ProtectedPage><DashboardLayouts /></ProtectedPage>} />
+
+      <Route path="/organization-management" element={<ProtectedPage><OrganizationManagement /></ProtectedPage>} />
+      <Route path="/forecast-approvals" element={<ProtectedPage><ForecastApprovals /></ProtectedPage>} />
+      <Route path="/workflow-automation" element={<ProtectedPage><WorkflowAutomation /></ProtectedPage>} />
+      <Route path="/strategic-planning" element={<ProtectedPage><StrategicPlanning /></ProtectedPage>} />
+      <Route path="/forecast-governance" element={<ProtectedPage><ForecastGovernance /></ProtectedPage>} />
+      <Route path="/kpi-management" element={<ProtectedPage><KPIManagement /></ProtectedPage>} />
+      <Route path="/data-quality-center" element={<ProtectedPage><DataQualityCenter /></ProtectedPage>} />
+      <Route path="/executive-command-center" element={<ProtectedPage><ExecutiveCommandCenter /></ProtectedPage>} />
+      <Route path="/notification-center" element={<ProtectedPage><NotificationCenter /></ProtectedPage>} />
+      <Route path="/audit-logs" element={<ProtectedPage><AuditLogs /></ProtectedPage>} />
+
       <Route path="*" element={<Navigate to="/dashboard" />} />
     </Routes>
   );

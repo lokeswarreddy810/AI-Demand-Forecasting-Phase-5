@@ -30,6 +30,17 @@ from app.api.v1.endpoints import forecast_accuracy
 from app.api.v1.endpoints import executive_reports
 from app.api.v1.endpoints import dashboard_enhancements
 
+from app.api.v1.endpoints import workflows
+from app.api.v1.endpoints import forecast_approvals
+from app.api.v1.endpoints import organizations
+from app.api.v1.endpoints import governance
+from app.api.v1.endpoints import kpi_management
+from app.api.v1.endpoints import data_quality
+from app.api.v1.endpoints import executive_command
+from app.api.v1.endpoints import notification_center
+from app.api.v1.endpoints import strategic_planning
+from app.api.v1.endpoints import audit_logs
+
 api_router = APIRouter()
 
 api_router.include_router(
@@ -198,4 +209,64 @@ api_router.include_router(
     dashboard_enhancements.router,
     prefix="/dashboard-enhancements",
     tags=["Dashboard Enhancements"]
+)
+
+api_router.include_router(
+    workflows.router,
+    prefix="/workflows",
+    tags=["Workflows"]
+)
+
+api_router.include_router(
+    forecast_approvals.router,
+    prefix="/forecast-approvals",
+    tags=["Forecast Approvals"]
+)
+
+api_router.include_router(
+    organizations.router,
+    prefix="/organizations",
+    tags=["Organization Management"]
+)
+
+api_router.include_router(
+    governance.router,
+    prefix="/governance",
+    tags=["Governance"]
+)
+
+api_router.include_router(
+    kpi_management.router,
+    prefix="/kpi-management",
+    tags=["KPI Management"]
+)
+
+api_router.include_router(
+    data_quality.router,
+    prefix="/data-quality",
+    tags=["Data Quality"]
+)
+
+api_router.include_router(
+    executive_command.router,
+    prefix="/executive-command",
+    tags=["Executive Command"]
+)
+
+api_router.include_router(
+    notification_center.router,
+    prefix="/notification-center",
+    tags=["Notification Center"]
+)
+
+api_router.include_router(
+    strategic_planning.router,
+    prefix="/strategic-planning",
+    tags=["Strategic Planning"]
+)
+
+api_router.include_router(
+    audit_logs.router,
+    prefix="/audit-logs",
+    tags=["Audit Logs"]
 )

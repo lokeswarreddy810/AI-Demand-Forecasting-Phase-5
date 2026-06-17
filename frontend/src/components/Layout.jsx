@@ -1,29 +1,32 @@
-import Sidebar from "./Sidebar";
-
-import Navbar from "./Navbar";
+import Navbar from "../components/common/Navbar";
+import Sidebar from "../components/common/Sidebar";
+import { useState } from "react";
 
 function Layout({ children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
+    <div className="min-h-screen bg-[#f5fff0] dark:bg-[#121212] flex">
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
 
-    <div className="flex bg-[#f7fff0] min-h-screen">
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ${
+          sidebarOpen ? "ml-72" : "ml-20"
+        }`}
+      >
+        <Navbar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-      <Sidebar />
-
-      <div className="flex-1 flex flex-col">
-
-        <Navbar />
-
-        <div className="p-8">
-
+        <main className="p-6">
           {children}
-
-        </div>
-
+        </main>
       </div>
-
     </div>
-
   );
 }
 
